@@ -1,5 +1,17 @@
 .lang {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    border: 1px solid currentColor;
+    border-radius: 10px;
+    background: transparent;
+    font: inherit;
     font-weight: 700;
     color: var(--inverted-primary-color);
     cursor: pointer;
+}
+
+.lang:hover,
+.lang:focus-visible {
+    color: #0056b3;
 }

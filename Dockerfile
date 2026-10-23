@@ -1,19 +1,10 @@
-# Используем базовый образ Node.js
-FROM node:14
-
-# Устанавливаем рабочую директорию
-WORKDIR /src
-
+FROM node:24-alpine AS build
+WORKDIR /app
 COPY package*.json ./
-
-# Устанавливаем зависимости
-RUN npm install
-
-# Копируем все файлы проекта в контейнер
+RUN npm ci
 COPY . .
+RUN npm run build
 
-# Открываем порт приложения
-EXPOSE 3000
-
-# Запускаем приложение
-CMD ["npm", "start"]
+FROM nginx:1.29-alpine
+COPY --from=build /app/dist /usr/share/nginx/html/Calculate
+EXPOSE 80

@@ -1,5 +1,5 @@
 
-import * as cls from './progressBar.module.scss';
+import cls from './progressBar.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState} from '../../../store/store';
 import { useTranslation } from 'react-i18next';

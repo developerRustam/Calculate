@@ -1,24 +1,17 @@
-import * as cls from './resultPassword.module.scss';
-import Copy from "../../assets/copy-svgrepo-com.svg";
-interface ResultPasswordProps{
-    passwords: string[]
+import cls from './resultPassword.module.scss';
+
+interface ResultPasswordProps {
+    passwords: string[];
 }
-const ResultPassword = ({passwords}:ResultPasswordProps) => {
-    return(
-        <div className={cls.result}>
-            {passwords.map(password => {
-                return <div key={password}  className={cls.result__password}> <span>{password}</span> <img className={cls.result__copy} src={Copy} alt="copy" /></div>
-            })}
-            {/* <div className={cls.result__password}> <span>dfadfafdadsfd</span> <img className={cls.result__copy} src={Copy} alt="copy" /></div>
-            <div className={cls.result__password}> <span>dfadfafdadsfd</span> <img className={cls.result__copy} src={Copy} alt="copy" /></div>
-            <div className={cls.result__password}> <span>dfadfafdadsfd</span> <img className={cls.result__copy} src={Copy} alt="copy" /></div>
-            <div className={cls.result__password}> <span>dfadfafdadsfd</span> <img className={cls.result__copy} src={Copy} alt="copy" /></div>
-            <div className={cls.result__password}> <span>dfadfafdadsfd</span> <img className={cls.result__copy} src={Copy} alt="copy" /></div>
-            <div className={cls.result__password}> <span>dfadfafdadsfd</span> <img className={cls.result__copy} src={Copy} alt="copy" /></div>
-            <div className={cls.result__password}> <span>dfadfafdadsfd</span> <img className={cls.result__copy} src={Copy} alt="copy" /></div>
-            <div className={cls.result__password}> <span>dfadfafdadsfd</span> <img className={cls.result__copy} src={Copy} alt="copy" /></div> */}
-        </div>
-    )
-}
+
+const ResultPassword = ({ passwords }: ResultPasswordProps) => (
+    <div className={cls.result} aria-live="polite">
+        {passwords.map((password, index) => (
+            <div key={`${password}-${index}`} className={cls.result__password}>
+                {password}
+            </div>
+        ))}
+    </div>
+);
 
 export default ResultPassword;

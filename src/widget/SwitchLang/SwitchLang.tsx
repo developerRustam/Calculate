@@ -1,12 +1,26 @@
-import i18n from '../../shared/config/i18n';
-import * as cls from './switchLang.module.scss';
-import i18next from 'i18next';
-    const changeLanguageHandler = () => {
-        i18n.changeLanguage( i18next.language === 'ru' ? "en" : 'ru')
-    }
+import { useTranslation } from 'react-i18next';
+import cls from './switchLang.module.scss';
+
 const SwitchLang = () => {
-    return(<div className={cls.lang} onClick={changeLanguageHandler}>
-        {i18next.language === 'ru' ? "en" : 'ru'}
-    </div>)
-}
+    const { i18n } = useTranslation();
+    const currentLanguage = i18n.resolvedLanguage?.startsWith('ru') ? 'ru' : 'en';
+    const nextLanguage = currentLanguage === 'ru' ? 'en' : 'ru';
+
+    const changeLanguage = async () => {
+        await i18n.changeLanguage(nextLanguage);
+        document.documentElement.lang = nextLanguage;
+    };
+
+    return (
+        <button
+            type="button"
+            className={cls.lang}
+            onClick={changeLanguage}
+            aria-label={`${nextLanguage.toUpperCase()} — ${currentLanguage === 'ru' ? 'switch language to English' : 'переключить язык на русский'}`}
+        >
+            {nextLanguage.toUpperCase()}
+        </button>
+    );
+};
+
 export default SwitchLang;

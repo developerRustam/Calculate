@@ -1,5 +1,5 @@
 import React from 'react';
-import * as cls from './mainBtn.module.scss';
+import cls from './mainBtn.module.scss';
 import { useTranslation } from 'react-i18next';
 import { classNames } from '../../../shared/lib/utils/classNames';
 

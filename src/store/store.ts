@@ -14,7 +14,6 @@ const counterSlice = createSlice({
   reducers: {
     editProgress: (state, action: PayloadAction<number>) => {
       state.progressBar += action.payload;
-      console.log(state.progressBar);
     }
   },
 });
