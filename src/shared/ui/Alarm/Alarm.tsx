@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import * as cls from './alarm.module.scss'
+import cls from './alarm.module.scss'
 const Alarm = () => {
     const { t, i18n } = useTranslation();
     return (

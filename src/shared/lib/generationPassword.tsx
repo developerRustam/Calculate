@@ -1,37 +1,69 @@
+export const MIN_PASSWORD_LENGTH = 6;
+export const MAX_PASSWORD_LENGTH = 64;
+
+const UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
+const NUMBERS = '0123456789';
+const SYMBOLS = '%*)?@#$~';
+
+function getRandomIndex(max: number): number {
+    const range = 2 ** 32;
+    const limit = range - (range % max);
+    const values = new Uint32Array(1);
+    let value: number;
+
+    do {
+        crypto.getRandomValues(values);
+        value = values[0];
+    } while (value >= limit);
+
+    return value % max;
+}
+
+function getRandomCharacter(characterSet: string): string {
+    return characterSet[getRandomIndex(characterSet.length)];
+}
+
+function shuffle(characters: string[]): string {
+    for (let index = characters.length - 1; index > 0; index -= 1) {
+        const target = getRandomIndex(index + 1);
+        [characters[index], characters[target]] = [characters[target], characters[index]];
+    }
+
+    return characters.join('');
+}
+
 export default function generatePasswords(
     length: number,
     useUpperCase: boolean,
     useLowerCase: boolean,
     useNumbers: boolean,
-    useSymbols: boolean
+    useSymbols: boolean,
 ): string[] {
-    const upperCaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const lowerCaseChars = 'abcdefghijklmnopqrstuvwxyz';
-    const numberChars = '0123456789';
-    const symbolChars = '%*)?@#$~';
-
-    let allChars = '';
-    if (useUpperCase) allChars += upperCaseChars;
-    if (useLowerCase) allChars += lowerCaseChars;
-    if (useNumbers) allChars += numberChars;
-    if (useSymbols) allChars += symbolChars;
-
-    if (allChars.length < length) {
-        allChars +=lowerCaseChars;
+    if (!Number.isInteger(length) || length < MIN_PASSWORD_LENGTH || length > MAX_PASSWORD_LENGTH) {
+        throw new RangeError(`Password length must be between ${MIN_PASSWORD_LENGTH} and ${MAX_PASSWORD_LENGTH}`);
     }
 
-    function getRandomUniqueChars(charSet: string, length: number): string {
-        const uniqueChars = new Set<string>();
-        while (uniqueChars.size < length) {
-            const randomChar = charSet[Math.floor(Math.random() * charSet.length)];
-            uniqueChars.add(randomChar);
+    const selectedSets = [
+        useUpperCase ? UPPERCASE : '',
+        useLowerCase ? LOWERCASE : '',
+        useNumbers ? NUMBERS : '',
+        useSymbols ? SYMBOLS : '',
+    ].filter(Boolean);
+
+    if (selectedSets.length === 0) {
+        selectedSets.push(LOWERCASE);
+    }
+
+    const allCharacters = selectedSets.join('');
+
+    return Array.from({ length: 10 }, () => {
+        const characters = selectedSets.map(getRandomCharacter);
+
+        while (characters.length < length) {
+            characters.push(getRandomCharacter(allCharacters));
         }
-        return Array.from(uniqueChars).join('');
-    }
 
-    const passwords = [];
-    for (let i = 0; i < 9; i++) {
-        passwords.push(getRandomUniqueChars(allChars, length));
-    }
-    return passwords;
+        return shuffle(characters);
+    });
 }

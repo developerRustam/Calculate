@@ -1,23 +1,48 @@
-@import "reset";
-@import "variables/global";
-@import "themes/normal";
-@import "themes/dark";
+@use "reset";
+@use "variables/global";
+@use "themes/normal";
+@use "themes/dark";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    min-width: 320px;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+}
 
 li {
     list-style: none;
 }
+
 * {
-    font-family: Nunito;
+    font-family: Nunito, Arial, sans-serif;
 }
 
 .app {
-    height: 100vh;
-    box-sizing: border-box;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
+
 .container {
+    width: 100%;
     max-width: 1220px;
     margin: 0 auto;
     padding: 0 25px;
-    box-sizing: border-box;
+}
+
+@media screen and (max-width: 500px) {
+    .container {
+        padding: 0 16px;
+    }
 }

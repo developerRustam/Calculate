@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import * as cls from './blockMainText.module.scss'
+import cls from './blockMainText.module.scss'
 const BlockMainText = () => {
     const { t, i18n } = useTranslation();
     return (

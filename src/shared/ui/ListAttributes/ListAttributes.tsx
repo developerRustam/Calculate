@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import * as cls from './listAttributes.module.scss';
+import cls from './listAttributes.module.scss';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, editProgress } from '../../../store/store';
 import { useTranslation } from 'react-i18next';
@@ -42,6 +42,7 @@ const ListAttributes = ({attributes, setAttributes}:ListAttributesProps) => {
                     checked={attribute.checked} 
                     onChange={() => handleCheckboxChange(attribute.id)} 
                     id={`checkbox-${attribute.id}`}
+                    aria-label={t(attribute.label)}
                 />
                 <label htmlFor={`checkbox-${attribute.id}`} className={cls.form__checkboxFake}></label>
                 <span className="form__att_text">{t(attribute.label)}</span>
